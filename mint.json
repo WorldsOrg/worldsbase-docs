@@ -1,71 +1,80 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Documentation",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/dark.png",
+    "light": "/logo/light.png"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#348dd0",
+    "light": "#3baaff",
+    "dark": "#246395",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#246395",
+      "to": "#3baaff"
     }
   },
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "support@worlds.org"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
-  },
   "tabs": [
     {
       "name": "API Reference",
       "url": "api-reference"
     }
   ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
-    }
-  ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Getting Started",
       "pages": [
         "introduction",
-        "quickstart",
-        "development"
+        "quickstart"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Development",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "development/self-host",
+        "development/contribution-Guide",
+        "development/troubleshooting",
+        "development/changelog"
+      ]
+    },
+    {
+      "group": "Features",
+      "pages": [
+        "features/dashboard",
+        "features/table-Editor",
+        "features/Composer",
+        "features/Authentication",
+        "features/Crypto",
+        "features/API",
+        "features/Unreal Engine Plugin"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
+        "guides/creating-a-Player-Inventory",
+        "guides/token-Gating",
+        "guides/player-Progression-Systems",
+        "guides/generating-Wallets-For-Users",
+        "guides/minting-Rewards",
+        "guides/virtual-Currencies",
+        "guides/saving-Match-History-Onchain",
+        "guides/using-with-Unreal-Engine"
+      ]
+    },
+    {
+      "group": "Considerations",
+      "pages": [
+        "considerations/security",
+        "considerations/limitations",
+        "considerations/FAQ"
       ]
     },
     {
@@ -84,8 +93,7 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "x": "https://twitter.com/WorldsOrg",
+    "github": "https://github.com/WorldsOrg/worldsbase"
   }
 }
