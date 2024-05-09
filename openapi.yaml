@@ -1,0 +1,1800 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      summary: Checks server status
+      parameters: []
+      responses:
+        '200':
+          description: Server status is OK!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckStatus'
+        '403':
+          description: Missing or wrong API key
+        '500':
+          description: Server error
+      tags:
+        - Default
+  /chain/mintto:
+    post:
+      operationId: ChainController_mintTo
+      summary: Mints NFT to the given address
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MintToDto'
+      responses:
+        '201':
+          description: NFT minted to the given address
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReceiptDto'
+        '500':
+          description: Error minting NFT
+      tags:
+        - Chain
+  /chain/send_token:
+    post:
+      operationId: ChainController_sendToken
+      summary: Sends token to given address
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendToDto'
+      responses:
+        '201':
+          description: Token sent to the given address
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReceiptDto'
+        '500':
+          description: Error sending token
+      tags:
+        - Chain
+  /chain/marketplace_direct:
+    get:
+      operationId: ChainController_marketplaceDirect
+      summary: Returns the marketplace direct listings
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: address
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Marketplace listings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectListingDto'
+      tags:
+        - Chain
+  /chain/marketplace_auction:
+    get:
+      operationId: ChainController_marketplaceAuction
+      summary: Returns the marketplace auction listings
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: address
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Marketplace listings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuctionListingDto'
+      tags:
+        - Chain
+  /thirdweb/mint_erc20_vault:
+    post:
+      operationId: ThirdwebController_createWallet
+      summary: Mints erc20 token(s) to a wallet
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Token(s) minted
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+        - Thirdweb
+  /wallet/create_turnkey_wallet:
+    post:
+      operationId: WalletController_createWallet
+      summary: Creates a wallet using Turnkey
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWalletDto'
+      responses:
+        '201':
+          description: Created wallet address
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TurnkeyWalletDto'
+      tags:
+        - Wallet
+  /wallet/create_kms_wallet:
+    post:
+      operationId: WalletController_creaeteAwsKmsWallet
+      summary: Creates a wallet using AWS KMS
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWalletDto'
+      responses:
+        '201':
+          description: Created wallet address
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsKmsWalletDto'
+      tags:
+        - Wallet
+  /wallet/create_wallet:
+    post:
+      operationId: WalletController_createWalletAddress
+      summary: Creates public and private key
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWalletDto'
+      responses:
+        '201':
+          description: Created wallet information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EthWalletDto'
+      tags:
+        - Wallet
+  /wallet/create_vault_wallet:
+    post:
+      operationId: WalletController_createVaultWallet
+      summary: Creates public and private key and stores in vault
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWalletDto'
+      responses:
+        '201':
+          description: Created wallet stored in vault
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EthWalletDto'
+      tags:
+        - Wallet
+  /wallet/encrypt_wallet:
+    post:
+      operationId: WalletController_encryptWallet
+      summary: Encrypts private key
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EncryptWalletDto'
+      responses:
+        '201':
+          description: Encrypted private key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EncryptedKeyDto'
+      tags:
+        - Wallet
+  /wallet/decrypt_wallet:
+    post:
+      operationId: WalletController_decryptWallet
+      summary: Decrypts private key
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecryptWalletDto'
+      responses:
+        '201':
+          description: Decrypted private key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecryptedKeyDto'
+      tags:
+        - Wallet
+  /wallet/stats:
+    get:
+      operationId: WalletController_getStats
+      summary: Returns wallet stats
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: wallet
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Wallet stats
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatsDto'
+      tags:
+        - Wallet
+  /wallet/value:
+    get:
+      operationId: WalletController_getValue
+      summary: Returns wallet worth
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: wallet
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Wallet value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValueDto'
+      tags:
+        - Wallet
+  /wallet/tokens:
+    get:
+      operationId: WalletController_getTokens
+      summary: Returns all tokens for an address
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: wallet
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Tokens from wallet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResultDto'
+      tags:
+        - Wallet
+  /wallet/nft:
+    get:
+      operationId: WalletController_getNFTs
+      summary: Returns NFTs
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: wallet
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Returns NFTs from a wallet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NFTResultDto'
+      tags:
+        - Wallet
+  /table/createtable:
+    post:
+      operationId: TableController_createTable
+      summary: Create a new table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTableDTO'
+      responses:
+        '201':
+          description: Table created successfully
+        '400':
+          description: Bad request
+      tags:
+        - Table
+  /table/deletetable/{tableName}:
+    delete:
+      operationId: TableController_deleteTable
+      summary: Delete an existing table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: tableName
+          required: true
+          in: path
+          description: Name of the table to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Table deleted successfully
+        '404':
+          description: Table not found
+      tags:
+        - Table
+  /table/updatetablename:
+    put:
+      operationId: TableController_updateTableName
+      summary: Update the name of an existing table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTableNameDTO'
+      responses:
+        '200':
+          description: Table name updated successfully
+        '404':
+          description: Table not found
+      tags:
+        - Table
+  /table/addcolumn:
+    post:
+      operationId: TableController_addColumn
+      summary: Add a new column to an existing table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddColumnDTO'
+      responses:
+        '200':
+          description: Column added successfully
+        '400':
+          description: Bad request
+      tags:
+        - Table
+  /table/deletecolumn:
+    delete:
+      operationId: TableController_deleteColumn
+      summary: Delete a column from a table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteTableColumnDTO'
+      responses:
+        '200':
+          description: Column deleted successfully
+        '404':
+          description: Column not found
+      tags:
+        - Table
+  /table/renamecolumn:
+    put:
+      operationId: TableController_renameColumn
+      summary: Rename an existing column in a table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenameColumnDTO'
+      responses:
+        '200':
+          description: Column renamed successfully
+        '404':
+          description: Column not found
+      tags:
+        - Table
+  /table/getcolumns/{tableName}:
+    get:
+      operationId: TableController_getColumns
+      summary: Get all columns from a specific table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: tableName
+          required: true
+          in: path
+          description: The name of the table to retrieve columns from
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Columns retrieved successfully
+        '404':
+          description: Table not found
+      tags:
+        - Table
+  /table/gettables/{schema}:
+    get:
+      operationId: TableController_getTables
+      summary: Get all tables from a specific schema
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: schema
+          required: true
+          in: path
+          description: The schema to list tables from
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Tables retrieved successfully
+      tags:
+        - Table
+  /table/gettable/{tableName}:
+    get:
+      operationId: TableController_getTable
+      summary: Get the entire table data by table name
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: tableName
+          required: true
+          in: path
+          description: The name of the table to retrieve data from
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Table data retrieved successfully
+        '404':
+          description: Table not found
+      tags:
+        - Table
+  /table/gettablevalue/{tableName}/{columnName}/{columnValue}:
+    get:
+      operationId: TableController_getTableValue
+      summary: >-
+        Get the table data by column value, example:
+        /getTableValue/users/username/johndoe
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: tableName
+          required: true
+          in: path
+          description: The name of the table to retrieve data from
+          schema:
+            type: string
+        - name: columnName
+          required: true
+          in: path
+          description: The name of the column to retrieve data from
+          schema:
+            type: string
+        - name: columnValue
+          required: true
+          in: path
+          description: The value of the column to retrieve data from
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Table data retrieved successfully
+      tags:
+        - Table
+  /table/gettablevalues/{tableName}:
+    get:
+      operationId: TableController_getTableValues
+      summary: Get the table data with optional filtering by multiple column values.
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: tableName
+          required: true
+          in: path
+          description: The name of the table to retrieve data from
+          schema:
+            type: string
+        - name: filters
+          required: false
+          in: query
+          description: >-
+            Optional filters in a key=value format, separated by commas.
+            Example: item_id=3,player_id=2
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Table data retrieved successfully
+      tags:
+        - Table
+  /table/jointables:
+    post:
+      operationId: TableController_joinTables
+      summary: Joins two tables
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JoinTablesDTO'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Table
+  /table/executeselectquery:
+    post:
+      operationId: TableController_executeSelectQuery
+      summary: Execute a select query
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryDTO'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Table
+  /table/insertdata:
+    post:
+      operationId: TableController_insertData
+      summary: Insert data into a table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InsertDataDTO'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Table
+  /table/deletedata:
+    delete:
+      operationId: TableController_deleteData
+      summary: Delete data from a table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteDataDTO'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Table
+  /table/updatedata:
+    put:
+      operationId: TableController_updateData
+      summary: Update data in a table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDataDTO'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Table
+  /table/updatefiltereddata:
+    put:
+      operationId: TableController_updateFilteredData
+      summary: Update data in a table with filters
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFilterDataDTO'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Table
+  /table/incrementdata:
+    post:
+      operationId: TableController_incrementData
+      summary: Increment data in a table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncrementDataDTO'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Table
+  /table/decrementdata:
+    post:
+      operationId: TableController_decrementData
+      summary: Decrement data in a table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncrementDataDTO'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Table
+  /table/defaulttables:
+    get:
+      operationId: TableController_getDefaultDefinedTables
+      summary: Get default tables to prevent creating tables with same names
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Table
+  /table/addtrigger:
+    post:
+      operationId: TableController_addTrigger
+      summary: Add a trigger to a table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriggerDTO'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Table
+  /table/removetrigger:
+    delete:
+      operationId: TableController_removeTrigger
+      summary: Remove a trigger from a table
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Table
+  /table/getschemas:
+    get:
+      operationId: TableController_getSchemas
+      summary: Get all schemas
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Schemas retrieved successfully
+      tags:
+        - Table
+  /table/createschema:
+    post:
+      operationId: TableController_createSchema
+      summary: Create a new schema
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Schema created successfully
+        '400':
+          description: Bad request
+      tags:
+        - Table
+  /auth/me:
+    get:
+      operationId: AuthController_getMe
+      summary: Returns users information generated from JWT
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          description: Bearer token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Me'
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      tags:
+        - Auth
+  /auth/login:
+    post:
+      operationId: AuthController_login
+      summary: Login function returns JWT
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthDTO'
+      responses:
+        '200':
+          description: JWT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auth'
+        '401':
+          description: Invalid credentials
+        '404':
+          description: No user found with this email
+      tags:
+        - Auth
+  /auth/signup:
+    post:
+      operationId: AuthController_signup
+      summary: Creates user and returns JWT
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthDTO'
+      responses:
+        '200':
+          description: JWT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auth'
+        '401':
+          description: User already exists
+        '500':
+          description: Server error
+      tags:
+        - Auth
+  /ethers/create_buy_from_listing_tx:
+    post:
+      operationId: EthersController_createBuyFromListingTx
+      summary: Creates the transaction for buying from a marketplace contract listing
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuyFromListingMarketplaceDto'
+      responses:
+        '201':
+          description: Tx created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardTxData'
+      tags:
+        - Chain
+  /ethers/sign_send_tx_aws_kms_sepolia:
+    post:
+      operationId: EthersController_signAndSend
+      summary: >-
+        signs a tx using aws kms and then sends the signed tx on the sepolia
+        network
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignAndSendAwsKmsDto'
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+        - Chain
+  /ethers/sign_tx_vault:
+    post:
+      operationId: EthersController_vaultSign
+      summary: signs a tx using private key stored in vault and returns the signed tx
+      parameters: []
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+        - Chain
+info:
+  title: Worldsbase
+  description: Worldsbase API description
+  version: 0.0.1
+  contact: {}
+tags:
+  - name: worlds-base
+    description: ''
+servers: []
+components:
+  schemas:
+    CheckStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          example: Worldsbase API is running!
+          description: Server status is OK!
+      required:
+        - status
+    MintToDto:
+      type: object
+      properties:
+        toAddress:
+          type: string
+          example: '0x350845DD3f03F1355233a3A7CEBC24b5aAD05eC5'
+      required:
+        - toAddress
+    ReceiptDto:
+      type: object
+      properties:
+        receipt:
+          type: string
+          example: '0x24a1a97691429b16f25e6e69f40a5af98a00091855c4549f9a865f568e9d9708'
+          description: Receipt
+      required:
+        - receipt
+    SendToDto:
+      type: object
+      properties:
+        toAddress:
+          type: string
+          example: '0x350845DD3f03F1355233a3A7CEBC24b5aAD05eC5'
+        amount:
+          type: number
+          example: 1
+      required:
+        - toAddress
+        - amount
+    DirectListingDto:
+      type: object
+      properties:
+        item:
+          example:
+            - assetContractAddress: '0x21c404005cEd824608561b362C61036903fEA7d7'
+              currencyContractAddress: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+              pricePerToken: '1000000000000000000'
+              currencyValuePerToken:
+                name: Sepolia Ether
+                symbol: ETH
+                decimals: 18
+                value:
+                  type: BigNumber
+                  hex: '0x0de0b6b3a7640000'
+                displayValue: '1.0'
+              id: '0'
+              tokenId: '1'
+              quantity: '1'
+              startTimeInSeconds: 1711034988
+              asset:
+                name: star
+                description: ''
+                image: >-
+                  https://21461335b8ce987737640624f6dc79a3.ipfscdn.io/ipfs/bafybeif2mihijkppb55plfk5emap4wwayrr2c3u2fjqn6uipmlhx35eohm/ak47-star.png
+                animation_url: ''
+                external_url: ''
+                background_color: ''
+                attributes:
+                  - trait_type: damage
+                    value: '12'
+                id: '1'
+                uri: ipfs://Qmed9Ywm6Kf1QpPVmweuQ2YSHvem1UggrEuePK8fZvRGmY/0
+                supply: 0
+                customImage: ''
+                customAnimationUrl: ''
+              endTimeInSeconds: 4102444836
+              creatorAddress: '0xE2dc27f386E713cd0F277151250811b401f30CB2'
+              isReservedListing: false
+              status: 4
+          type: array
+          items:
+            type: string
+      required:
+        - item
+    AuctionListingDto:
+      type: object
+      properties:
+        item:
+          example:
+            - id: '0'
+              creatorAddress: '0xE2dc27f386E713cd0F277151250811b401f30CB2'
+              assetContractAddress: '0x21c404005cEd824608561b362C61036903fEA7d7'
+              tokenId: '0'
+              quantity: '1'
+              currencyContractAddress: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+              minimumBidAmount: '1000000000000000000'
+              minimumBidCurrencyValue:
+                name: Sepolia Ether
+                symbol: ETH
+                decimals: 18
+                value:
+                  type: BigNumber
+                  hex: '0x0de0b6b3a7640000'
+                displayValue: '1.0'
+              buyoutBidAmount: '2000000000000000000'
+              buyoutCurrencyValue:
+                name: Sepolia Ether
+                symbol: ETH
+                decimals: 18
+                value:
+                  type: BigNumber
+                  hex: '0x1bc16d674ec80000'
+                displayValue: '2.0'
+              timeBufferInSeconds: 900
+              bidBufferBps: 500
+              startTimeInSeconds: 1711035024
+              endTimeInSeconds: 1713627024
+              asset:
+                name: gold
+                description: ''
+                image: >-
+                  https://21461335b8ce987737640624f6dc79a3.ipfscdn.io/ipfs/bafybeiastbflijl3myzyadk2m2tatom7ip6kf267hajxyid34mhw4flfmm/ak47-gold.png
+                animation_url: ''
+                external_url: ''
+                background_color: ''
+                attributes:
+                  - trait_type: damage
+                    value: '10'
+                id: '0'
+                uri: ipfs://QmS9Cxo5jgztosNGNqy1jhG36E1hzEtvgv1Em7rWg7Zibi/0
+                supply: 0
+                customImage: ''
+                customAnimationUrl: ''
+              status: 4
+          type: array
+          items:
+            type: string
+      required:
+        - item
+    CreateWalletDto:
+      type: object
+      properties:
+        user_id:
+          type: string
+          example: '1234'
+          description: User ID
+      required:
+        - user_id
+    TurnkeyWalletDto:
+      type: object
+      properties:
+        address:
+          type: string
+          example: '0x01A9B82dbE9873bFC22CAd4A37E1860FC00b0440'
+          description: Wallet Address
+      required:
+        - address
+    AwsKmsWalletDto:
+      type: object
+      properties:
+        address:
+          type: string
+          example: '0x01A9B82dbE9873bFC22CAd4A37E1860FC00b0440'
+          description: Wallet Address
+        key_id:
+          type: string
+          example: 0cea4c6e-738b-4c6d-ba7c-541111f9402a
+          description: Key ID
+        user_id:
+          type: string
+          example: '1'
+          description: User ID
+      required:
+        - address
+        - key_id
+        - user_id
+    EthWalletDto:
+      type: object
+      properties:
+        address:
+          type: string
+          example: '0x01A9B82dbE9873bFC22CAd4A37E1860FC00b0440'
+          description: Wallet Address
+        privateKey:
+          type: string
+          example: '0x4183218ccfd27764021e644abe56571c873c6a8f7b88783ab52c68f6fb44ce55'
+          description: Private Key
+        user_id:
+          type: string
+          example: '1'
+          description: User ID
+      required:
+        - address
+        - privateKey
+        - user_id
+    EncryptWalletDto:
+      type: object
+      properties:
+        key:
+          type: string
+          example: '0x4183218ccfd27764021e644abe56571c873c6a8f7b88783ab52c68f6fb44ce55'
+          description: Private Key
+        pass:
+          type: string
+          example: my_super_secret_password
+          description: Encryption Password
+      required:
+        - key
+        - pass
+    EncryptedKeyDto:
+      type: object
+      properties:
+        encrypted:
+          type: string
+          example: U2FsdGVkX1+g8zYXJjg4rXZ5Y3
+          description: Encrypted Private Key
+      required:
+        - encrypted
+    DecryptWalletDto:
+      type: object
+      properties:
+        pass:
+          type: string
+          example: my_super_secret_password
+          description: Encryption Password
+        encryptedData:
+          type: string
+          example: U2FsdGVkX1+g8zYXJjg4rXZ5Y3
+          description: Encrypted Private Key
+      required:
+        - pass
+        - encryptedData
+    DecryptedKeyDto:
+      type: object
+      properties:
+        decrypted:
+          type: string
+          example: '0x4183218ccfd27764021e644abe56571c873c6a8f7b88783ab52c68f6fb44ce55'
+          description: Private Key
+      required:
+        - decrypted
+    StatsDto:
+      type: object
+      properties:
+        nfts:
+          type: string
+          example: '4'
+          description: NFT Count
+        collections:
+          type: string
+          example: '5'
+          description: Collection Count
+        transactions:
+          type: object
+          example:
+            total: '4'
+          description: Total Transactions
+        nft_transfers:
+          type: object
+          example:
+            total: '1'
+          description: Total NFT Transfers
+        token_transfers:
+          type: object
+          example:
+            total: '2'
+          description: Total Token Transfers
+      required:
+        - nfts
+        - collections
+        - transactions
+        - nft_transfers
+        - token_transfers
+    ValueDto:
+      type: object
+      properties:
+        total_networth_usd:
+          type: string
+          example: '4.00'
+          description: Total Networth in USD
+        chains:
+          example:
+            - chain: eth
+              native_balance: '3'
+              native_balance_formatted: '0'
+              native_balance_usd: '4.00'
+              token_balance_usd: '12.00'
+              networth_usd: '3.00'
+          description: Chains
+          type: array
+          items:
+            type: string
+      required:
+        - total_networth_usd
+        - chains
+    TokenResultDto:
+      type: object
+      properties:
+        token_address:
+          type: string
+          example: '0x350845DD3f03F1355233a3A7CEBC24b5aAD05eC5'
+        name:
+          type: string
+          example: APE
+        symbol:
+          type: string
+          example: APE
+        logo:
+          type: object
+          example: null
+          nullable: true
+        thumbnail:
+          type: object
+          example: null
+          nullable: true
+        decimals:
+          type: number
+          example: 18
+        balance:
+          type: string
+          example: '101715701444169451516503179'
+      required:
+        - token_address
+        - name
+        - symbol
+        - logo
+        - thumbnail
+        - decimals
+        - balance
+    NFTResultDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: SYNCING
+        total:
+          type: string
+          example: '2000'
+        page:
+          type: string
+          example: '2'
+        page_size:
+          type: string
+          example: '100'
+        cursor:
+          type: string
+          example: ''
+        result:
+          type: object
+          example:
+            token_address: '0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB'
+            token_id: '15'
+            contract_type: ERC721
+            owner_of: '0x057Ec652A4F150f7FF94f089A38008f49a0DF88e'
+            block_number: '88256'
+            block_number_minted: '88256'
+            token_uri: ''
+            metadata: ''
+            normalized_metadata: ''
+            media: ''
+            amount: '1'
+            name: CryptoKitties
+            symbol: RARI
+            token_hash: 502cee781b0fb40ea02508b21d319ced
+            last_token_uri_sync: '2021-02-24T00:47:26.647Z'
+            last_metadata_sync: '2021-02-24T00:47:26.647Z'
+            possible_spam: 'false'
+            verified_collection: 'false'
+      required:
+        - status
+        - total
+        - page
+        - page_size
+        - cursor
+        - result
+    CreateTableDTO:
+      type: object
+      properties:
+        tableName:
+          type: string
+          example: users
+          description: Table Name
+        columns:
+          example:
+            - name: id
+              type: serial
+              constraints: PRIMARY KEY
+            - name: email
+              type: TEXT
+            - name: password
+              type: TEXT
+          description: Columns
+          type: array
+          items:
+            type: string
+      required:
+        - tableName
+        - columns
+    UpdateTableNameDTO:
+      type: object
+      properties:
+        oldTableName:
+          type: string
+          example: users
+          description: Old Table Name
+        newTableName:
+          type: string
+          example: players
+          description: New Table Name
+      required:
+        - oldTableName
+        - newTableName
+    AddColumnDTO:
+      type: object
+      properties:
+        tableName:
+          type: string
+          example: users
+          description: Table Name
+        columnName:
+          type: string
+          example: username
+          description: Column Name
+        columnType:
+          type: string
+          example: TEXT
+          description: Column Type
+      required:
+        - tableName
+        - columnName
+        - columnType
+    DeleteTableColumnDTO:
+      type: object
+      properties:
+        tableName:
+          type: string
+          example: users
+          description: Table Name
+        columnName:
+          type: string
+          example: email
+          description: Column Name
+      required:
+        - tableName
+        - columnName
+    RenameColumnDTO:
+      type: object
+      properties:
+        tableName:
+          type: string
+          example: users
+          description: Table Name
+        oldColumnName:
+          type: string
+          example: username
+          description: Old Column Name
+        newColumnName:
+          type: string
+          example: user_name
+          description: New Column Name
+      required:
+        - tableName
+        - oldColumnName
+        - newColumnName
+    JoinTablesDTO:
+      type: object
+      properties:
+        tables:
+          example:
+            - table1
+            - table2
+          description: Tables to join
+          type: array
+          items:
+            type: string
+        joinColumns:
+          example:
+            - column1
+            - column2
+          description: Columns to join
+          type: array
+          items:
+            type: string
+        joinType:
+          type: string
+          example: INNER
+          description: Join Type
+        filter:
+          type: object
+          example:
+            column: table1.someColumn
+            value: someValue
+          description: Filter
+      required:
+        - tables
+        - joinColumns
+        - joinType
+        - filter
+    QueryDTO:
+      type: object
+      properties:
+        query:
+          type: string
+          example: SELECT * FROM users
+          description: SQL Query
+      required:
+        - query
+    InsertDataDTO:
+      type: object
+      properties:
+        tableName:
+          type: string
+          example: users
+          description: Table Name
+        data:
+          type: object
+          example:
+            email: test@user.com
+            username: testuser
+      required:
+        - tableName
+        - data
+    DeleteDataDTO:
+      type: object
+      properties:
+        tableName:
+          type: string
+          example: users
+          description: Table Name
+        condition:
+          type: string
+          example: user_id=1
+          description: Condition
+      required:
+        - tableName
+        - condition
+    UpdateDataDTO:
+      type: object
+      properties:
+        tableName:
+          type: string
+          example: users
+          description: Table Name
+        condition:
+          type: string
+          example: username=testuser
+          description: Condition
+        data:
+          type: object
+          example:
+            email: test@user.com
+            username: testuser
+      required:
+        - tableName
+        - condition
+        - data
+    UpdateFilterDataDTO:
+      type: object
+      properties:
+        tableName:
+          type: string
+          example: users
+          description: Table Name
+        data:
+          type: object
+          example:
+            email: test@user.com
+            username: testuser
+        filters:
+          type: object
+          example: username=testuser
+          description: Condition
+      required:
+        - tableName
+        - data
+        - filters
+    IncrementDataDTO:
+      type: object
+      properties:
+        tableName:
+          type: string
+          example: users
+          description: Table Name
+        condition:
+          type: string
+          example: user_id=1
+          description: Condition
+        columnName:
+          type: string
+          example: points
+          description: Column Name
+        value:
+          type: number
+          example: 10
+          description: Value to increment
+      required:
+        - tableName
+        - condition
+        - columnName
+        - value
+    TriggerDTO:
+      type: object
+      properties:
+        tableName:
+          type: string
+          example: users
+          description: Table Name
+        triggerName:
+          type: string
+          example: notify_event
+          description: Trigger Name
+        method:
+          type: string
+          example: INSERT
+          description: Trigger Method
+        condition:
+          type: string
+          example: "NEW.score > 10"
+          description: A simple conditional expression as a string.
+      required:
+        - tableName
+        - triggerName
+        - method
+        - condition
+    Me:
+      type: object
+      properties:
+        email:
+          type: string
+          example: user@worlds.org
+          description: The email of the user
+        id:
+          type: string
+          example: '123'
+          description: The ID of the user
+        iat:
+          type: number
+          example: 1610165115
+          description: Issued at time
+        exp:
+          type: number
+          example: 1610769915
+          description: Expiration time
+      required:
+        - email
+        - id
+        - iat
+        - exp
+    AuthDTO:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+    Auth:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpYVCJ9.eyJlbWFpbCI3Im96Z3UyckBvemd1cnJiLmNvbSIsImlkIjoiZjRkMTZlM2QtZTJmNS00MmJlLTg0OGUtNTE5YWFhYzM3NmQ4IiwiaWF0IjoxNzEwMTY1MTE1LCJleHAiOjE3MTA3Njk5MTV9.cVE4GDgrbOejAoAzk_vgsEXenNLe2lfvMiLtWmB7TpQ
+          description: JWT
+      required:
+        - accessToken
+    BuyFromListingMarketplaceDto:
+      type: object
+      properties:
+        contractAddress:
+          type: string
+          example: '0x01A9B82dbE9873bFC22CAd4A37E1860FC00b0440'
+          description: Contract Address
+        listingId:
+          type: string
+          example: '1'
+          description: Listing ID on the Marketplace
+        buyerAddress:
+          type: string
+          example: '0x01A9B82dbE9873bFC22CAd4A37E1860FC00b0440'
+          description: Wallet Address that is buying on the Marketplace
+        quantity:
+          type: string
+          example: '1'
+          description: quantity
+        currency:
+          type: string
+          example: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+          description: address of the currency used to purchase
+        price:
+          type: string
+          example: '1'
+          description: price of the item on the marketplace
+        chainId:
+          type: number
+          example: 1
+          description: Chain ID for the network being used
+      required:
+        - contractAddress
+        - listingId
+        - buyerAddress
+        - quantity
+        - currency
+        - price
+        - chainId
+    StandardTxData:
+      type: object
+      properties: {}
+    SignAndSendAwsKmsDto:
+      type: object
+      properties:
+        senderAddress:
+          type: string
+          example: '0x01A9B82dbE9873bFC22CAd4A37E1860FC00b0440'
+          description: Ethereum Address of the transaction sender
+        key_id:
+          type: string
+          example: 0cea4c6e-738b-4c6d-ba7c-541111f9402a
+          description: Key ID that corresponds to the Eth address
+        txData:
+          example:
+            type: 2
+            chainId: 11155111
+            nonce: 16
+            maxPriorityFeePerGas: '2000000000'
+            maxFeePerGas: '100000000000'
+            gasLimit: '250000'
+            to: '0xb6a470c31DC33E898B6fcadA53D97473fd852c35'
+            value: '100000000000000'
+            data: >-
+              0x704232dc0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000fd6ed4a795192283d666265fae6ffca6a9d134240000000000000000000000000000000000000000000000000000000000000001000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000000005af3107a4000
+          description: The transaction data to be signed using Aws Kms
+          allOf:
+            - $ref: '#/components/schemas/StandardTxData'
+      required:
+        - senderAddress
+        - key_id
+        - txData

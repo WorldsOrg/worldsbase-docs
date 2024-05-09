@@ -21,6 +21,7 @@
       "url": "support@worlds.org"
     }
   ],
+  "openapi": "https://chain-production.up.railway.app/api-yaml",
   "tabs": [
     {
       "name": "API Reference",
@@ -80,15 +81,82 @@
     {
       "group": "API Documentation",
       "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        {
+          "group": "Default",
+          "pages": [
+            "api-reference/default/checks-server-status"
+          ]
+        },
+        {
+          "group": "Chain",
+          "pages": [
+            "api-reference/chain/mints-nft-to-the-given-address",
+            "api-reference/chain/sends-token-to-given-address",
+            "api-reference/chain/returns-the-marketplace-direct-listings",
+            "api-reference/chain/returns-the-marketplace-auction-listings",
+            "api-reference/chain/creates-the-transaction-for-buying-from-a-marketplace-contract-listing",
+            "api-reference/chain/signs-a-tx-using-aws-kms-and-then-sends-the-signed-tx-on-the-sepolia-network",
+            "api-reference/chain/signs-a-tx-using-private-key-stored-in-vault-and-returns-the-signed-tx"
+          ]
+        },
+        {
+          "group": "Thirdweb",
+          "pages": [
+            "api-reference/thirdweb/mints-erc20-tokens-to-a-wallet"
+          ]
+        },
+        {
+          "group": "Wallet",
+          "pages": [
+            "api-reference/wallet/creates-a-wallet-using-turnkey",
+            "api-reference/wallet/creates-a-wallet-using-aws-kms",
+            "api-reference/wallet/creates-public-and-private-key",
+            "api-reference/wallet/creates-public-and-private-key-and-stores-in-vault",
+            "api-reference/wallet/encrypts-private-key",
+            "api-reference/wallet/decrypts-private-key",
+            "api-reference/wallet/returns-wallet-stats",
+            "api-reference/wallet/returns-wallet-worth",
+            "api-reference/wallet/returns-all-tokens-for-an-address",
+            "api-reference/wallet/returns-nfts"
+          ]
+        },
+        {
+          "group": "Table",
+          "pages": [
+            "api-reference/table/create-a-new-table",
+            "api-reference/table/delete-an-existing-table",
+            "api-reference/table/update-the-name-of-an-existing-table",
+            "api-reference/table/add-a-new-column-to-an-existing-table",
+            "api-reference/table/delete-a-column-from-a-table",
+            "api-reference/table/rename-an-existing-column-in-a-table",
+            "api-reference/table/get-all-columns-from-a-specific-table",
+            "api-reference/table/get-all-tables-from-a-specific-schema",
+            "api-reference/table/get-the-entire-table-data-by-table-name",
+            "api-reference/table/get-the-table-data-by-column-value-example:-gettablevalueusersusernamejohndoe",
+            "api-reference/table/get-the-table-data-with-optional-filtering-by-multiple-column-values",
+            "api-reference/table/joins-two-tables",
+            "api-reference/table/execute-a-select-query",
+            "api-reference/table/insert-data-into-a-table",
+            "api-reference/table/delete-data-from-a-table",
+            "api-reference/table/update-data-in-a-table",
+            "api-reference/table/update-data-in-a-table-with-filters",
+            "api-reference/table/increment-data-in-a-table",
+            "api-reference/table/decrement-data-in-a-table",
+            "api-reference/table/get-default-tables-to-prevent-creating-tables-with-same-names",
+            "api-reference/table/add-a-trigger-to-a-table",
+            "api-reference/table/remove-a-trigger-from-a-table",
+            "api-reference/table/get-all-schemas",
+            "api-reference/table/create-a-new-schema"
+          ]
+        },
+        {
+          "group": "Auth",
+          "pages": [
+            "api-reference/auth/returns-users-information-generated-from-jwt",
+            "api-reference/auth/login-function-returns-jwt",
+            "api-reference/auth/creates-user-and-returns-jwt"
+          ]
+        }
       ]
     }
   ],
