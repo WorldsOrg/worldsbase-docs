@@ -39,10 +39,8 @@
     {
       "group": "Development",
       "pages": [
-        "development/self-host",
         "development/contribution-Guide",
-        "development/troubleshooting",
-        "development/changelog"
+        "development/troubleshooting"
       ]
     },
     {
@@ -51,23 +49,10 @@
         "features/dashboard",
         "features/table-Editor",
         "features/Composer",
+        "features/Unreal Engine Plugin",
+        "features/Web3",
         "features/Authentication",
-        "features/Crypto",
-        "features/API",
-        "features/Unreal Engine Plugin"
-      ]
-    },
-    {
-      "group": "Guides",
-      "pages": [
-        "guides/creating-a-Player-Inventory",
-        "guides/token-Gating",
-        "guides/player-Progression-Systems",
-        "guides/generating-Wallets-For-Users",
-        "guides/minting-Rewards",
-        "guides/virtual-Currencies",
-        "guides/saving-Match-History-Onchain",
-        "guides/using-with-Unreal-Engine"
+        "features/API"
       ]
     },
     {
