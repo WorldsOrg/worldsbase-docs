@@ -1,0 +1,22 @@
+---
+title: 'Composer'
+description: 'Composer is a no-code automation tool for building on top of your data. You can build "Flows" triggered from data, events, smart contract events, and scheduled times.'
+---
+![](/images/composer-main.png)
+*New User Composer Flow*
+
+In this example, we set up flow logic when a new user is created. The flow is triggered when a new entry is added to the users table. From there, we call the Create Wallet node to generate an EVM wallet for the user and get the user.id from the new entry. Next we call call 3 nodes asynchronously: Update Data to store the new wallet address in the users table, Transfer Pack to transfer an on-chain lootbox to the user’s wallet, and Top Off Eth to allow the user’s wallet to cover gas fees.
+
+Available Composer Nodes:
+    - Trigger: Use this to trigger the flow from changes in your data (Change Data Capture)
+    - Cron: Use this to trigger the flow from scheduled times
+    - DB Function: Use this to call SQL functions
+    - Insert: adds a new row to a table
+    - Update: updates a row in a table
+    - Store On-chain: uses MUD to store your data in a smart contract
+    - Create Wallet: Generates an EVM wallet
+    - Transfer Pack: Transfers an onchain lootbox to a wallet address
+    - Top Off Eth: Transfers ETH from admin wallet to a wallet address
+    - Send Token: Transfers an ERC-20 token to a wallet
+    - Add Note: Creates a sticky note on the Composer canvas
+    - Contact us to request a new node!

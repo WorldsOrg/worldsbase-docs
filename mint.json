@@ -33,14 +33,7 @@
       "group": "Getting Started",
       "pages": [
         "introduction",
-        "quickstart"
-      ]
-    },
-    {
-      "group": "Development",
-      "pages": [
-        "development/contribution-Guide",
-        "development/troubleshooting"
+        "installation"
       ]
     },
     {
@@ -49,7 +42,7 @@
         "features/dashboard",
         "features/table-Editor",
         "features/Composer",
-        "features/Unreal Engine Plugin",
+        "features/Unreal-Engine-Plugin",
         "features/Web3",
         "features/Authentication",
         "features/API"
@@ -58,8 +51,6 @@
     {
       "group": "Considerations",
       "pages": [
-        "considerations/security",
-        "considerations/limitations",
         "considerations/FAQ"
       ]
     },
