@@ -39,8 +39,8 @@
     {
       "group": "Features",
       "pages": [
-        "features/dashboard",
-        "features/table-Editor",
+        "features/Dashboard",
+        "features/Table-Editor",
         "features/Composer",
         "features/Unreal-Engine-Plugin",
         "features/Web3",
